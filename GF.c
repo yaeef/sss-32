@@ -2,7 +2,7 @@
 /*Definición de operaciones dentro de un Campo finito de Galois*/
 
 
-int eea(int a, int P)
+int multiplicative_inv_modulo(int a, int P)
 {
   if(!a) //EN UN CAMPO FINITO DE GALOIS TODO ELEMENTO DEL CAMPO TIENE INVERSO, EXCEPTO EL CERO.
   {
@@ -29,6 +29,11 @@ int eea(int a, int P)
   return (int)t;
 }
 
+int additive_inv_modulo(int a, int P)
+{
+  return (int)(((long long)P-(((long long)a%P+P)%P))%P); 
+}
+
 int add_modulo(int a, int b, int P)
 {
   return (int)(((long long)a+b)%P);
@@ -36,8 +41,7 @@ int add_modulo(int a, int b, int P)
 
 int sub_modulo(int a, int b, int P)
 {
-  int sub = (a-b)%P;
-  return (sub<0) ? sub+P : sub;
+  return add_modulo(a, additive_inv_modulo(b,P), P);
 }
 
 int mul_modulo(int a, int b, int P)
@@ -47,7 +51,7 @@ int mul_modulo(int a, int b, int P)
 
 int div_modulo(int a, int b, int P)
 {
-  int b_i = eea(b, P);
+  int b_i = multiplicative_inv_modulo(b, P);
   if(b_i != -1)
   {
     return mul_modulo(a, b_i, P);

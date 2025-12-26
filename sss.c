@@ -1,6 +1,6 @@
 /*Primera versión del esquema de shamir*/
 
-//FUNCIONES
+//FUNCIONES 
 
 unsigned int generar_numero_aleatorio()
 {
@@ -26,10 +26,11 @@ void construir_polinomio(polinomio *P, unsigned int s)
     *(((*P).coeficientes)+i) = generar_numero_aleatorio();
 }
 
-void inicializar_shares(shares *Ss, unsigned int x)
+void inicializar_shares(shares *Ss, unsigned int x, unsigned int y)
 {
   Ss->S = (share*)malloc(x*sizeof(share));
   Ss->n = x;
+  Ss->k = y;
 }
 
 void destruir_shares(shares *Ss)
@@ -77,3 +78,26 @@ void imprimir_shares(shares *Ss)
   printf("\n");
 }
 
+unsigned int interpolar_shares(shares *Ss)
+{
+  unsigned int s = 0;
+  for(int i=0; i<Ss->k; i++)
+  {
+    unsigned int num = 1;
+    unsigned int den = 1;
+
+    for(int j=0; j<Ss->k; j++)
+    {
+      if(i == j) continue;
+
+      num = mul_modulo(num, additive_inv_modulo((*(((*Ss).S)+j)).x, PRIME_NUMBER), PRIME_NUMBER);
+      den = mul_modulo(den, sub_modulo((*(((*Ss).S)+i)).x, (*(((*Ss).S)+j)).x, PRIME_NUMBER), PRIME_NUMBER);
+    }
+
+    unsigned int term = mul_modulo((*(((*Ss).S)+i)).y, num, PRIME_NUMBER);
+    term = div_modulo(term, den, PRIME_NUMBER);
+
+    s = add_modulo(s,term, PRIME_NUMBER);
+  }
+  return s;
+}

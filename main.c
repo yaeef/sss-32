@@ -27,9 +27,10 @@ int main(int argc, char **argv)
   inicializar_polinomio(&P, k);
   construir_polinomio(&P, s);
   imprimir_polinomio(&P);
-  inicializar_shares(&Ss, n);
+  inicializar_shares(&Ss, n, k);
   generar_shares(&Ss, &P);
   imprimir_shares(&Ss);
+  printf("%u\n", interpolar_shares(&Ss));
   destruir_shares(&Ss);
   destruir_polinomio(&P);
 

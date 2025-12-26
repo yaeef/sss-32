@@ -2,11 +2,14 @@
  * GF(P) = {x; x ~ a(modP); a,x números enteros}
  * */
 
-#define PRIME_NUMBER 1031
+#define PRIME_NUMBER 100003
 
 
-//ALGORITMO EXTENDIDO DE EUCLIDES
-int eea(int, int);
+//INVERSO MULTIPLICATIVO
+int multiplicative_inv_modulo(int, int);
+
+//INVERSO ADITIVO
+int additive_inv_modulo(int, int);
 
 //OPERACIONES
 int add_modulo(int, int, int);   //SUMA EN UN CAMPO FINITO

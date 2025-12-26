@@ -18,6 +18,7 @@ typedef struct
 {
   share *S;
   unsigned int n;
+  unsigned int k;
 }shares;
 
 unsigned int generar_numero_aleatorio();
@@ -28,7 +29,7 @@ void destruir_polinomio(polinomio* );
 
 void construir_polinomio(polinomio *P, unsigned int s);
 
-void inicializar_shares(shares* , unsigned int );
+void inicializar_shares(shares* , unsigned int, unsigned int );
 
 void destruir_shares(shares* );
 
@@ -39,6 +40,8 @@ void generar_shares(shares* , polinomio * );
 void imprimir_polinomio(polinomio * );
 
 void imprimir_shares(shares* );
+
+unsigned int interpolar_shares(shares* );
 
 
 #include "sss.c"
